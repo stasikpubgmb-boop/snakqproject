@@ -1,18 +1,9 @@
 package com.snakq.client.module.impl.combat;
-import com.snakq.client.module.Category; 
+import com.snakq.client.module.Category;
 import com.snakq.client.module.Module;
-import net.minecraft.client.MinecraftClient;
+import com.snakq.client.setting.SliderSetting;
 public class Reach extends Module {
-    private double reach = 3.0;
-    public Reach() { 
-        super("Reach", Category.COMBAT); 
-    }
-    @Override public void onEnable() {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        mc.options.attackDistance = reach;
-    }
-    @Override public void onDisable() {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        mc.options.attackDistance = 4.5;
-    }
+    public SliderSetting range = new SliderSetting("Range", 4.5f, 3.0f, 6.0f);
+    public Reach() { super("Reach", Category.COMBAT); addSetting(range); }
+    @Override public void onTick() {}
 }
