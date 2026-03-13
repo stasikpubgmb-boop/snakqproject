@@ -31,4 +31,4 @@ Plugin [id: 'net.fabricmc.fabric-loom', version: '1.10.1'] was not found in any 
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 10s
+BUILD FAILED in 9s
