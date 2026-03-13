@@ -6,8 +6,14 @@ import java.util.List;
 public class ModuleManager {
     private List<Module> modules = new ArrayList<>();
 
+    public void registerModule(Module module) {
+        modules.add(module);
+    }
+
     public void init() {
-        // init modules
+        for (Module module : modules) {
+            module.init();
+        }
     }
 
     public List<Module> getModules() {

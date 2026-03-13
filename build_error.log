@@ -14,9 +14,12 @@ For more on this, please refer to https://docs.gradle.org/9.4.0/userguide/comman
 
 FAILURE: Build failed with an exception.
 
+* Where:
+Build file '/data/data/com.termux/files/home/snakqproject/build.gradle' line: 5
+
 * What went wrong:
-A problem occurred configuring root project 'snakqproject'.
-> Failed to setup Minecraft, net.fabricmc.loom.util.fmj.FabricModJsonUtils$ParseException: Unable to find json element for key (id)
+A problem occurred evaluating root project 'snakqproject'.
+> Could not set unknown property 'sourceCompatibility' for root project 'snakqproject' of type org.gradle.api.Project.
 
 * Try:
 > Run with --stacktrace option to get the stack trace.
@@ -24,4 +27,4 @@ A problem occurred configuring root project 'snakqproject'.
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 1m 28s
+BUILD FAILED in 9s
