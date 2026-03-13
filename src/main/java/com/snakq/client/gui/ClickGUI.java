@@ -2,41 +2,33 @@ package com.snakq.client.gui;
 
 import com.snakq.client.module.Module;
 import com.snakq.client.module.ModuleManager;
-import com.snakq.client.module.impl.ModuleImpl;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.util.math.MatrixStack;
 
-import java.awt.*;
-import java.io.IOException;
+import java.util.List;
 
-public class ClickGUI extends GuiScreen {
+public class ClickGUI extends Screen {
 
     private ModuleManager moduleManager;
-    private Minecraft mc;
 
     public ClickGUI(ModuleManager moduleManager) {
         this.moduleManager = moduleManager;
-        this.mc = Minecraft.getMinecraft();
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        super.render(matrices, mouseX, mouseY, delta);
 
         for (Module module : moduleManager.getModules()) {
-            drawModule(module, mouseX, mouseY);
+            drawModule(module, mouseX, mouseY, matrices);
         }
-
-        GlStateManager.disableBlend();
-        GlStateManager.popMatrix();
     }
 
-    private void drawModule(Module module, int mouseX, int mouseY) {
+    private void drawModule(Module module, int mouseX, int mouseY, MatrixStack matrices) {
         int x = 10;
         int y = 10;
         int width = 100;
@@ -55,41 +47,27 @@ public class ClickGUI extends GuiScreen {
 
         boolean isHovered = mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;
 
-        if (isHovered) {
-            if (mc.gameSettings.rightShiftKeyBind.isPressed()) {
-                module.setEnabled(!module.isEnabled());
-            }
-
-            if (mc.gameSettings.rightClickKeyBind.isPressed()) {
-                mc.displayGuiScreen(new ModuleSettingsGUI(module));
-            }
-
-            if (mc.gameSettings.middleClickKeyBind.isPressed()) {
-                // set keybind
-            }
-        }
-
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferBuilder = tessellator.getBuffer();
+        bufferBuilder.begin(7, VertexFormats.POSITION_COLOR);
         if (module.isEnabled()) {
-            Gui.drawRect(x, y, x + width, y + height, new Color(0, 255, 0, 150).getRGB());
+            bufferBuilder.vertex(x, y + height, 0).color(0, 255, 0, 150).next();
+            bufferBuilder.vertex(x + width, y + height, 0).color(0, 255, 0, 150).next();
+            bufferBuilder.vertex(x + width, y, 0).color(0, 255, 0, 150).next();
+            bufferBuilder.vertex(x, y, 0).color(0, 255, 0, 150).next();
         } else {
-            Gui.drawRect(x, y, x + width, y + height, new Color(128, 128, 128, 150).getRGB());
+            bufferBuilder.vertex(x, y + height, 0).color(128, 128, 128, 150).next();
+            bufferBuilder.vertex(x + width, y + height, 0).color(128, 128, 128, 150).next();
+            bufferBuilder.vertex(x + width, y, 0).color(128, 128, 128, 150).next();
+            bufferBuilder.vertex(x, y, 0).color(128, 128, 128, 150).next();
         }
+        tessellator.draw();
 
-        fontRendererObj.drawString(module.getName(), x + 5, y + 5, 0xFFFFFF);
+        textRenderer.drawWithShadow(matrices, module.getName(), x + 5, y + 5, 0xFFFFFF);
     }
 
     @Override
-    public boolean doesGuiPauseGame() {
-        return false;
-    }
-
-    @Override
-    public void handleMouseInput() throws IOException {
-        super.handleMouseInput();
-    }
-
-    @Override
-    public void handleKeyboardInput() throws IOException {
-        super.handleKeyboardInput();
+    public void tick() {
+        super.tick();
     }
 }
