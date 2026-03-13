@@ -1,18 +1,29 @@
 package com.snakq.client.module.impl.movement;
-import com.snakq.client.module.Category;
+import com.snakq.client.module.Category; 
 import com.snakq.client.module.Module;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
-public class NoFall extends Module {
-    public NoFall() { 
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+@Mod.EventBusSubscriber(Dist.CLIENT)
+public class NoFallMod extends Module {
+    public NoFallMod() { 
         super("NoFall", Category.MOVEMENT); 
     }
-    @Override public void onEnable() {
+    @SubscribeEvent
+    public void onPlayerTick(PlayerEvent.PlayerTickEvent event) {
         MinecraftClient mc = MinecraftClient.getInstance();
         if(mc.player==null||mc.world==null) return;
-        mc.player.fallDistance = 0;
-    }
-    @Override public void onDisable() {
-        // No need to reset fall distance on disable
+        PlayerEntity player = mc.player;
+        if (isEnabled()) {
+            // Prevent fall damage
+            mc.player.fallDistance = 0;
+        }
     }
 }
