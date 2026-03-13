@@ -1,4 +1,4 @@
-package com.snakq.client.module/impl/combat;
+package com.snakq.client.module.impl.combat;
 
 import com.snakq.client.module.Module;
 import com.snakq.client.module.Category;
