@@ -1,37 +1,12 @@
 package com.snakq.client.module;
 
-public enum Category {
-    COMBAT,
-    MOVEMENT,
-    MISC
-}
-
 public abstract class Module {
-    private final String name;
-    private final Category category;
-    private boolean enabled;
+    private String moduleName;
 
-    public Module(String name, Category category) {
-        this.name = name;
-        this.category = category;
-        this.enabled = false;
+    public Module(String moduleName) {
+        this.moduleName = moduleName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public abstract void init();
+    // Removed enum Category to a separate file
+    public abstract com.snakq.client.Category getCategory();
 }
