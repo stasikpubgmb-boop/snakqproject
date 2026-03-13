@@ -14,12 +14,14 @@ For more on this, please refer to https://docs.gradle.org/9.4.0/userguide/comman
 
 FAILURE: Build failed with an exception.
 
-* Where:
-Build file '/data/data/com.termux/files/home/snakqproject/build.gradle' line: 26
-
 * What went wrong:
-A problem occurred evaluating root project 'snakqproject'.
-> Could not set unknown property 'sourceCompatibility' for root project 'snakqproject' of type org.gradle.api.Project.
+A problem occurred configuring root project 'snakqproject'.
+> Failed to notify project evaluation listener.
+   > Failed to setup Minecraft, java.lang.IllegalArgumentException: Configuration 'minecraft' has no dependencies
+   > Failed to calculate the value of extension 'loom' property 'minecraftJarConfiguration'.
+      > Cannot get MinecraftMetadataProvider before it has been setup
+   > Failed to calculate the value of extension 'loom' property 'minecraftJarConfiguration'.
+      > Cannot get MinecraftMetadataProvider before it has been setup
 
 * Try:
 > Run with --stacktrace option to get the stack trace.
@@ -27,4 +29,4 @@ A problem occurred evaluating root project 'snakqproject'.
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 52s
+BUILD FAILED in 11s
