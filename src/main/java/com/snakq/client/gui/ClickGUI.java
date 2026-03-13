@@ -2,47 +2,48 @@ package com.snakq.client.gui;
 
 import com.snakq.client.module.Module;
 import com.snakq.client.module.ModuleManager;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.Screen;
-import net.minecraft.client.gui.ScreenTexts;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
-
 import java.util.List;
 
 public class ClickGUI extends Screen {
-    private int offset;
 
     public ClickGUI() {
-        super(Text.of("ClickGUI"));
+        super(Text.literal("ClickGUI"));
     }
 
     @Override
-    public void init() {
-        offset = 0;
-        List<Module> modules = ModuleManager.getModules();
-        for (Module module : modules) {
-            // Add module buttons here
-            addDrawableChild(new ButtonWidget(10, 10 + offset, 100, 20, Text.of(module.getName()), (button) -> {
-                // Toggle module
-                module.setEnabled(!module.isEnabled());
-            }));
-            offset += 25;
-        }
-    }
-
-    @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices);
-        List<Module> modules = ModuleManager.getModules();
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackground(context, mouseX, mouseY, delta);
+        int x = 10;
         int y = 10;
+        List<Module> modules = ModuleManager.getModules();
         for (Module module : modules) {
-            // Draw module text
-            textRenderer.draw(matrices, module.getName(), 10, y, module.isEnabled() ? 0xFF00FF : 0xFF0000);
-            y += 20;
+            int color = module.isEnabled() ? 0xFF00FF00 : 0xFFFF0000;
+            context.fill(x, y, x + 100, y + 12, 0xAA000000);
+            context.drawTextWithShadow(textRenderer, module.getName(), x + 2, y + 2, color);
+            y += 14;
         }
-        super.render(matrices, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        int x = 10;
+        int y = 10;
+        for (Module module : ModuleManager.getModules()) {
+            if (mouseX >= x && mouseX <= x + 100 && mouseY >= y && mouseY <= y + 12) {
+                module.toggle();
+                return true;
+            }
+            y += 14;
+        }
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean shouldPause() {
+        return false;
     }
 }
