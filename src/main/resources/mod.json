@@ -1,11 +1,12 @@
 {
   "name": "Snakq Client",
   "description": "A Minecraft mod",
-  "version": "${version}",
+  "version": "1.0",
+  "authors": ["Your Name"],
+  "license": "MIT",
+  "mainClass": "com.snakq.client.SnakqClient",
   "mixins": [],
   "entrypoints": {
-    "main": [
-      "com.snakq.client.mod.SnakqClientMod"
-    ]
+    "main": ["com.snakq.client.SnakqClient"]
   }
 }
