@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "snakqclient",
+  "version": "1.0.0",
+  "name": "SnakqClient",
+  "description": "PvP client mod for Minecraft 1.21.4",
+  "authors": ["snakq"],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "client": ["com.snakq.client.SnakqClient"]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "fabric-api": "*",
+    "minecraft": "~1.21.4"
+  }
+}
