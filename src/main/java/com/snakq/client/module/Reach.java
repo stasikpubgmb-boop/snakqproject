@@ -3,9 +3,9 @@ package com.snakq.client.module.impl.combat;
 import com.snakq.client.module.Category;
 import com.snakq.client.module.Module;
 
-public class Scaffold extends Module {
-    public Scaffold() {
-        super("Scaffold", Category.COMBAT);
+public class Reach extends Module {
+    public Reach() {
+        super("Reach", Category.COMBAT);
     }
 
     @Override
