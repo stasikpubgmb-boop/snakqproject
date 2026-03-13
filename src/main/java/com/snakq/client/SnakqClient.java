@@ -8,6 +8,7 @@ import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 import com.snakq.client.module.ModuleManager;
 import com.snakq.client.gui.ClickGUI;
+import com.snakq.client.module.Module;
 
 public class SnakqClient implements ClientModInitializer {
 
@@ -25,6 +26,9 @@ public class SnakqClient implements ClientModInitializer {
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            for (Module module : ModuleManager.getModules()) {
+                module.onTick();
+            }
             while (openGui.wasPressed()) {
                 client.setScreen(new ClickGUI());
             }
