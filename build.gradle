@@ -1,0 +1,31 @@
+plugins {
+    id 'fabric-loom' version '1.0-SNAPSHOT'
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://maven.fabricmc.net/'
+    }
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:1.21.4'
+    mappings 'net.fabricmc:ychteba:1.21.4+fabric-1.21.4.2.1.67'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.73.1+1.21.4'
+    modImplementation include('net.fabricmc:fabric-loader:0.14.23')
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filteringCharset = 'UTF-8'
+    filesMatching('**/fabric.mod.json') {
+        filter(ReplaceTokens, tokens: [version: project.version])
+    }
+}
