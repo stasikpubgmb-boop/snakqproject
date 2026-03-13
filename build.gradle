@@ -1,10 +1,10 @@
 plugins {
-    id 'fabric-loom' version '1.10.1'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
+    id 'java'
 }
 
-sourceSets {
-    main.java.srcDirs = ['src/main/java']
-}
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
 repositories {
     maven {
@@ -13,19 +13,29 @@ repositories {
     mavenCentral()
     google()
     maven {
-        url 'https://libraries.minecraft.net/'
+        url 'https://libraries.minecraft.net'
     }
 }
 
 dependencies {
-    modImplementation 'net.fabricmc:fabric-loader:0.14.23'
-    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.73.1+1.21.4'
+    modImplementation 'net.fabricmc:fabric-api:0.73.0+1.21.4'
+    modImplementation 'net.fabricmc.fabric-api:fabric-loader:0.14.23'
 }
 
 processResources {
     inputs.property('version', project.version)
-    filteringCharset = 'UTF-8'
-    filesMatching('**/mod.json') {
-        filter/org.gradle.api.resources.TextResourceFilter, Map<String, String>, [version: project.version]
+    filesMatching('**/module.properties') {
+        filter(ReplaceTokens, tokens: [version: project.version])
+    }
+}
+
+loom {
+    accessWidenerPath = file('src/main/resources/m META-INF/accesswidener.mod.json')
+    mixinConfig = file('mixins.mod.json')
+}
+
+jar {
+    from('src/main/resources') {
+        include 'META-INF/mods.toml'
     }
 }
