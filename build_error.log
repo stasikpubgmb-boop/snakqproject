@@ -12,7 +12,7 @@ For more on this, please refer to https://docs.gradle.org/9.4.0/userguide/comman
 FAILURE: Build failed with an exception.
 
 * Where:
-Build file '/data/data/com.termux/files/home/snakqproject/build.gradle' line: 3
+Build file '/data/data/com.termux/files/home/snakqproject/build.gradle' line: 2
 
 * What went wrong:
 Plugin [id: 'net.fabricmc.fabric-loom', version: '1.10.1'] was not found in any of the following sources:
@@ -31,4 +31,4 @@ Plugin [id: 'net.fabricmc.fabric-loom', version: '1.10.1'] was not found in any 
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 12s
+BUILD FAILED in 10s
